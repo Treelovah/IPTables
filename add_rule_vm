@@ -9,17 +9,14 @@ help()
 run()
 {
     # Parameters
-    PORT="$3"
-    IP="$2"
     ROUTE="virbr0"
-    
-    sudo iptables -t nat -I PREROUTING -p tcp --dport $PORT -j DNAT --to $IP:$PORT
+    sudo iptables -t nat -I PREROUTING -p tcp --dport $2 -j DNAT --to $1:$2
     echo "EXECUTED"
 }
 
 if [[ $1 == 'run' ]]
 then
-    run
+    run $2 $3
 elif [[ $1 == '-h' || $# -eq 0 ]]
 then
     help
