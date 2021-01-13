@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Quickly open public PORT on IP via assigned ROUTE#
+help()
+{
+    echo "Set parameters before use"
+    echo "Example: ./$0 run <Guest VM IP> <port>"
+}
+run()
+{
+    # Parameters
+    PORT="$3"
+    IP="$2"
+    ROUTE="virbr0"
+    
+    sudo iptables -t nat -I PREROUTING -p tcp --dport $PORT -j DNAT --to $IP:$PORT
+    echo "EXECUTED"
+}
+
+if [[ $1 == 'run' ]]
+then
+    run
+elif [[ $1 == '-h' || $# -eq 0 ]]
+then
+    help
+else
+    exit 1
+fi
+
